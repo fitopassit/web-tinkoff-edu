@@ -1,6 +1,6 @@
 # Репозиторий для лабораторных работ по Web-программированию в рамках курса Tinkoff
 ### Выполнил студент группы 6409-010302D Пирогов Артём
-[![Statham](https://starya.net/wp-content/uploads/2020/12/jason-statham-3-1500x1000.jpg)](https://starya.net/wp-content/uploads/2020/12/jason-statham-3-1500x1000.jpg)
+![Statham](https://avatars.dzeninfra.ru/get-zen_doc/3126430/pub_5faacda07935977d972c55be_5faacdff99041f23a4e24a1e/scale_1200)
 
 - # Сколько выпил кваса?
 - # Ты сколько литров пива сегодня в*ебал?
