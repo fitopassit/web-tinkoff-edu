@@ -1,7 +1,7 @@
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import EditIcon from '@mui/icons-material/Edit';
+import EditNoteIcon from '@mui/icons-material/EditNote';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import { Box, CircularProgress, IconButton, Typography } from '@mui/material';
+import { Box, CircularProgress, Grid, IconButton, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ActorsList } from './Actors-list.jsx';
@@ -44,71 +44,93 @@ export const MovieCard = () => {
   const { actors, director, genres, id, plot, posterUrl, runtime, title, year, rating } = movie;
 
   return (
-    <Box sx={{ maxWidth: '100%' }}>
-      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <Box sx={{ alignItems: 'center' }}>
-          <Typography component="span" variant="h6">
-            id: {id}
+    <Box sx={{ flexGrow: 1 }}>
+      <Grid container spacing={2}>
+        <Grid item xs={8}>
+          <Typography component="span" sx={{ fontSize: '14px', mr: 2 }}>
+            Id: {id}
           </Typography>
-          <IconButton component="span" onClick={copyIdInClipboard(id)}>
+          <IconButton component="span" sx={{ width: '14px', height: '14px' }} onClick={copyIdInClipboard(id)}>
             <ContentCopyIcon />
           </IconButton>
-        </Box>
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        </Grid>
+        <Grid item xs={4} sx={{ display: 'flex', alignItems: 'center' }}>
           <Link to={`/movie/${id}/edit`}>
-            <EditIcon />
-            <Typography component="span" variant="h6">
+            <EditNoteIcon sx={{ color: '#000000' }} />
+            <Typography component="span" variant="h6" sx={{ color: '#000000', fontSize: '16px' }}>
               Редактировать
             </Typography>
           </Link>
-        </Box>
-      </Box>
-      <Box sx={{ display: 'flex', alignItems: 'start' }}>
-        <Box
-          component="img"
-          sx={{
-            height: 300,
-            width: 200,
-            maxHeight: { xs: 120, md: 300 },
-            maxWidth: { xs: 80, md: 200 },
-            objectFit: 'cover',
-          }}
-          alt="Movie poster"
-          src={posterUrl}
-          onError={imgError}
-        />
-        <Typography component="span" variant="h5" sx={{ fontWeight: 'bold' }}>
-          {title}
-        </Typography>
-        <IconButton onClick={() => setLiked(prevState => !prevState)}>
-          <FavoriteIcon aria-label="add to favorites" color={isLiked ? 'primary' : 'inherit'} />
-        </IconButton>
-      </Box>
-      <Box>
-        <Typography variant="body2" component="div" color="text.secondary">
-          {director}
-        </Typography>
-        <Typography variant="body2" component="div" color="text.secondary">
-          Год производства: {year}
-        </Typography>
-        <Typography variant="body2" component="div" color="text.secondary">
-          Длительность: {runtime} минут
-        </Typography>
-        <Typography variant="body2" component="div" color="text.secondary">
-          Жанры: {genres ? genres.join(', ') : ''}
-        </Typography>
-        <ActorsList actors={actors} />
-        <Typography variant="h5" component="div">
-          Описание:
-        </Typography>
-        <Typography variant="body2" component="div" color="text.secondary">
-          {plot}
-        </Typography>
-        <Typography variant="h5" component="span" color="text.secondary">
-          Текущий рейтинг:
-          <Rating rating={rating} />
-        </Typography>
-      </Box>
+        </Grid>
+        <Grid item xs={4}>
+          <Box
+            component="img"
+            sx={{
+              height: 300,
+              width: 200,
+              maxHeight: { xs: 120, md: 300 },
+              maxWidth: { xs: 80, md: 200 },
+              objectFit: 'cover',
+            }}
+            alt="Movie poster"
+            src={posterUrl}
+            onError={imgError}
+          />
+        </Grid>
+        <Grid item xs={8}>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <Typography variant="h5" sx={{ fontWeight: 'bold', fontSize: '24px' }}>
+              {title}
+            </Typography>
+            <IconButton onClick={() => setLiked(prevState => !prevState)}>
+              <FavoriteIcon aria-label="add to favorites" color={isLiked ? 'primary' : 'inherit'} />
+            </IconButton>
+          </Box>
+        </Grid>
+        <Grid item xs={4}>
+          <Typography variant="body2" component="span" sx={{ display: 'block' }} color="text.secondary">
+            {director}
+          </Typography>
+          <Typography variant="body2" component="span" sx={{ fontSize: '16px', fontWeight: 'bold', display: 'block' }}>
+            Параметры
+          </Typography>
+          <Typography variant="body2" component="span" sx={{ fontSize: '16px', display: 'block' }}>
+            Год производства: {year}
+          </Typography>
+          <Typography variant="body2" component="span" sx={{ fontSize: '16px', display: 'block' }}>
+            Длительность: {runtime} минут
+          </Typography>
+          <Typography>Жанры: {genres ? genres.join(', ') : ''}</Typography>
+        </Grid>
+        <Grid item xs={4}>
+          <ActorsList actors={actors} />
+        </Grid>
+        <Grid item xs={12}>
+          <Typography
+            variant="body2"
+            component="span"
+            sx={{ fontSize: '20px', fontWeight: 'bold', mt: '13px', display: 'block' }}
+          >
+            Описание
+          </Typography>
+          <br />
+          <Typography variant="body2" component="span" sx={{ fontSize: '16px', display: 'block' }}>
+            {plot}
+          </Typography>
+          <Box display="flex" alignItems="end">
+            <Typography variant="body2" component="span" sx={{ fontSize: '16px' }}>
+              Текущий рейтинг
+            </Typography>
+            <Typography
+              variant="body2"
+              component="span"
+              sx={{ display: 'flex', alignItems: 'center', fontSize: '16px', ml: '50px' }}
+            >
+              <Rating rating={rating} />
+            </Typography>
+          </Box>
+        </Grid>
+      </Grid>
     </Box>
   );
 };
