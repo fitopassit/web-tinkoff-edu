@@ -1,31 +1,36 @@
-import React from 'react';
-import {Header} from '../components';
-import {CssBaseline, Divider, Grid} from "@mui/material";
-import {SearchTextField} from "./Search-text-field.jsx";
-import {MovieCardPage} from "./Movie-card-page.jsx";
-import {EditForm} from "./Edit-form.jsx";
+import { CssBaseline, Divider, Grid } from '@mui/material';
+import { useState } from 'react';
+import { Outlet } from 'react-router-dom';
+import { Header } from '../../components';
+import { MovieCardsList } from '../../components/Movie-cards-list.jsx';
+import { SearchTextField } from '../../components/Search-text-field.jsx';
 
 export function ListPage() {
-    return (
-        <React.Fragment>
-            <Header/>
-            <CssBaseline/>
-            <Grid container spacing={2} columns={16}>
-                <Grid item={true} xs={8}>
-                    <SearchTextField/>
-                    {/*под хедером*/}
-                    <MovieCardPage/>
-                </Grid>
-                <Divider orientation="vertical" flexItem />
-                <Grid item={true} xs={6}>
-                    <EditForm/>
-                </Grid>
-            </Grid>
-            {/*<Container maxWidth="sm">*/}
-
-            {/*</Container>*/}
-
-
-        </React.Fragment>
-    )
+  const [searchQuery, setSearchQuery] = useState('');
+  return (
+    <>
+      <Header />
+      <CssBaseline />
+      <Grid
+        container
+        sx={{
+          width: 1200,
+          maxWidth: 1200,
+          minWidth: 1200,
+          mt: 10,
+        }}
+        spacing={2}
+        columns={16}
+      >
+        <Grid item={true} xs={6}>
+          <SearchTextField searchQuery={searchQuery} onChangeQuery={setSearchQuery} />
+          <MovieCardsList searchQuery={searchQuery} sx={{ height: '100%', minHeight: '100vh', maxHeight: '100vh' }} />
+        </Grid>
+        <Divider orientation="vertical" flexItem />
+        <Grid item={true} xs={9}>
+          <Outlet />
+        </Grid>
+      </Grid>
+    </>
+  );
 }

@@ -1,0 +1,34 @@
+import Card from '@mui/material/Card';
+import CardActionArea from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import { Link, useParams } from 'react-router-dom';
+
+export function MovieCardMiniature({ movie }) {
+  const { id: movieId } = useParams();
+  const { actors, director, genres, id, plot, posterUrl, runtime, title, year, rating } = movie;
+  return (
+    <Link to={`/movie/${id}`}>
+      <Card
+        sx={{
+          minWidth: 110,
+          borderRadius: 3,
+          m: 2,
+          '&:hover': {
+            border: '1px solid black',
+          },
+          background: id == movieId ? '#EBF4FF' : 'white',
+        }}
+      >
+        <CardActionArea>
+          <CardContent>
+            <Typography sx={{ mb: 1.5 }}>{title}</Typography>
+            <Typography variant="body2" color="text.secondary">
+              {year} | {genres.join(', ')}
+            </Typography>
+          </CardContent>
+        </CardActionArea>
+      </Card>
+    </Link>
+  );
+}
