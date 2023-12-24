@@ -4,11 +4,11 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import { Box, CircularProgress, Grid, IconButton, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { ActorsList } from './Actors-list.jsx';
+import { ActorsList } from './ActorsList.jsx';
 import { Rating } from './Rating.jsx';
 
 const copyIdInClipboard = id => {
-  navigator.clipboard.writeText(id);
+  void navigator.clipboard.writeText(id);
 };
 
 export const MovieCard = () => {
@@ -21,7 +21,7 @@ export const MovieCard = () => {
   useEffect(() => {
     setLoading(true);
     const fetchMovies = async id => {
-      let url = `http://localhost:3000/movies/${id}`;
+      const url = `http://localhost:3000/movies/${id}`;
       try {
         const response = await fetch(url);
         const currentMovie = await response.json();
@@ -40,7 +40,6 @@ export const MovieCard = () => {
   };
 
   if (loading) return <CircularProgress />;
-
   const { actors, director, genres, id, plot, posterUrl, runtime, title, year, rating } = movie;
 
   return (
@@ -117,7 +116,7 @@ export const MovieCard = () => {
           <Typography variant="body2" component="span" sx={{ fontSize: '16px', display: 'block' }}>
             {plot}
           </Typography>
-          <Box display="flex" alignItems="end">
+          <Box display="flex" alignItems="center">
             <Typography variant="body2" component="span" sx={{ fontSize: '16px' }}>
               Текущий рейтинг
             </Typography>

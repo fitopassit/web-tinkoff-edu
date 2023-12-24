@@ -1,1 +1,1 @@
-export { EditFormPage } from './Edit-form-page.jsx';
+export { EditFormPage } from './EditFormPage.jsx';

@@ -1,8 +1,13 @@
 import { CircularProgress } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
-import { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+const createMoviesLabels = movies => {
+  return movies.map(movie => [movie.title, movie.id]).map(item => ({ label: item[0], id: item[1] }));
+};
 
 export function SearchTextField({ searchQuery, onChangeQuery }) {
   const [loading, setLoading] = useState(true);
@@ -10,7 +15,7 @@ export function SearchTextField({ searchQuery, onChangeQuery }) {
   const navigate = useNavigate();
   useEffect(() => {
     const fetchMovies = async () => {
-      let url = `http://localhost:3000/movies/`;
+      const url = `http://localhost:3000/movies/`;
       try {
         let movies = await fetch(url).then(response => response.json());
         setMovies(movies);
@@ -21,12 +26,14 @@ export function SearchTextField({ searchQuery, onChangeQuery }) {
       }
     };
     fetchMovies();
+
     setLoading(true);
   }, []);
 
+  const moviesLabels = useMemo(() => createMoviesLabels(movies), [movies]);
+
   if (loading) return <CircularProgress />;
 
-  let moviesLabels = movies.map(movie => [movie.title, movie.id]).map(item => ({ label: item[0], id: item[1] }));
   return (
     <>
       <Autocomplete
@@ -45,9 +52,9 @@ export function SearchTextField({ searchQuery, onChangeQuery }) {
         onChange={(event, value) => {
           onChangeQuery(value?.label);
           if (value?.id === undefined) {
-            navigate(`./movie/`);
+            navigate(`/movie/`);
           } else {
-            navigate(`./movie/${value.id}`);
+            navigate(`/movie/${value.id}`);
           }
         }}
         renderInput={params => <TextField {...params} label="Введите название фильма" />}
@@ -55,3 +62,7 @@ export function SearchTextField({ searchQuery, onChangeQuery }) {
     </>
   );
 }
+SearchTextField.propTypes = {
+  searchQuery: PropTypes.string,
+  onChangeQuery: PropTypes.func,
+};

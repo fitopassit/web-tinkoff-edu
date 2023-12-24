@@ -2,8 +2,8 @@ import { CssBaseline, Divider, Grid } from '@mui/material';
 import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Header } from '../../components';
-import { MovieCardsList } from '../../components/Movie-cards-list.jsx';
-import { SearchTextField } from '../../components/Search-text-field.jsx';
+import { MovieCardsList } from '../../components/MovieCardsList.jsx';
+import { SearchTextField } from '../../components/SearchTextField.jsx';
 
 export function ListPage() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -18,6 +18,7 @@ export function ListPage() {
           maxWidth: 1200,
           minWidth: 1200,
           mt: 10,
+          height: 1000,
         }}
         spacing={2}
         columns={16}

@@ -1,19 +1,19 @@
 import AddIcon from '@mui/icons-material/Add';
 import { Box, Button, CircularProgress, Divider, List, Paper } from '@mui/material';
 import Typography from '@mui/material/Typography';
+import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { MovieCardMiniature } from './Movie-card-miniature.jsx';
+import { MovieCardMiniature } from './MovieCardMiniature.jsx';
 
 export const MovieCardsList = ({ searchQuery }) => {
   const [loading, setLoading] = useState(true);
   const [movies, setMovies] = useState(null);
-  const [searchedMovie, setSearchedMovie] = useState([]);
 
   useEffect(() => {
     setLoading(true);
     const fetchMovies = async () => {
-      let url = 'http://localhost:3000/movies';
+      const url = 'http://localhost:3000/movies';
       try {
         let movies = await fetch(url).then(response => response.json());
         setMovies(movies);
@@ -63,4 +63,8 @@ export const MovieCardsList = ({ searchQuery }) => {
       </Box>
     </>
   );
+};
+
+MovieCardsList.propTypes = {
+  searchQuery: PropTypes.string,
 };

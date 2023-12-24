@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { ListPage, MovieCard } from './pages';
-import { CreateFormPage } from './pages/create-form-page/Create-form-page.jsx';
+import { CreateFormPage } from './pages/create-form-page/CreateFormPage.jsx';
 import { EditFormPage } from './pages/edit-form-page';
 
 function App() {

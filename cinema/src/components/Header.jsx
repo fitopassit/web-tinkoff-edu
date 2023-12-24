@@ -5,10 +5,9 @@ import { Link } from 'react-router-dom';
 
 export const Header = () => {
   return (
-    // <ThemeProvider theme={theme}>
     <AppBar position="absolute" sx={{ backgroundColor: 'customColor.base_02' }}>
       <Toolbar>
-        <Link to={'./'} style={{ flexGrow: 1, color: '#000', fontWeight: 'bold' }}>
+        <Link to={'/'} style={{ flexGrow: 1, color: '#000', fontWeight: 'bold' }}>
           Админка фильмотеки
         </Link>
         <Button variant="contained" color="button">
@@ -16,6 +15,5 @@ export const Header = () => {
         </Button>
       </Toolbar>
     </AppBar>
-    // </ThemeProvider>
   );
 };

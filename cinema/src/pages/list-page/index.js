@@ -1,6 +1,6 @@
-export { ListPage } from './List-page.jsx';
-export { SearchTextField } from '../../components/Search-text-field.jsx';
-export { MovieCardMiniature } from '../../components/Movie-card-miniature.jsx';
-export { MovieCardsList } from '../../components/Movie-cards-list.jsx';
-export { EditForm } from '../../components/Edit-form.jsx';
-export { MovieCard } from '../../components/Movie-card.jsx';
+export { ListPage } from './ListPage.jsx';
+export { SearchTextField } from '../../components/SearchTextField.jsx';
+export { MovieCardMiniature } from '../../components/MovieCardMiniature.jsx';
+export { MovieCardsList } from '../../components/MovieCardsList.jsx';
+export { EditForm } from '../../components/EditForm.jsx';
+export { MovieCard } from '../../components/MovieCard.jsx';

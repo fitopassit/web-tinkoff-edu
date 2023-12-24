@@ -1,22 +1,43 @@
-import { Box, Button, Divider, TextField } from '@mui/material';
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Box, Button, CircularProgress, Divider, TextField } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
-export const CreateForm = () => {
-  const [movie, setMovie] = useState({});
+export const EditForm = () => {
+  const [loading, setLoading] = useState(true);
+  const { id: movieId } = useParams();
+  const [movie, setMovie] = useState(null);
+
   const navigate = useNavigate();
 
-  const refreshPage = () => {
-    navigate(0);
+  const refreshPageAfterEdit = () => {
+    navigate(`/movie/${movieId}`);
+    window.location.reload();
   };
+
+  useEffect(() => {
+    setLoading(true);
+    const fetchMovies = async id => {
+      const url = `http://localhost:3000/movies/${id}`;
+      try {
+        const response = await fetch(url);
+        const currentMovie = await response.json();
+        setMovie(currentMovie);
+      } catch (err) {
+        alert('Ошибка в запросе фильма для редактирования: ' + err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchMovies(movieId);
+  }, [movieId]);
 
   const handleSubmit = async e => {
     e.preventDefault();
 
     try {
-      await fetch(`http://localhost:3000/movies/`, {
-        method: 'POST',
+      await fetch(`http://localhost:3000/movies/${movieId}`, {
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -24,20 +45,20 @@ export const CreateForm = () => {
       }).then(() => {});
     } catch (err) {
       alert(err);
-    } finally {
-      e.target.reset();
     }
-    refreshPage();
-  };
-  const onChange = e => {
-    setMovie(prevState => {
-      return { ...prevState, [e.target.name]: e.target.value };
-    });
-  };
 
+    refreshPageAfterEdit();
+  };
   const collectedArray = e => {
     setMovie(prevState => {
       return { ...prevState, [e.target.name]: e.target.value.split(', ') };
+    });
+  };
+
+  if (loading) return <CircularProgress />;
+  const onChange = e => {
+    setMovie(prevState => {
+      return { ...prevState, [e.target.name]: e.target.value };
     });
   };
 
@@ -53,6 +74,7 @@ export const CreateForm = () => {
         sx={{ mb: 3 }}
         fullWidth
         name={'title'}
+        value={movie.title}
       />
       <TextField
         label="Жанры"
@@ -63,6 +85,7 @@ export const CreateForm = () => {
         sx={{ mb: 3 }}
         fullWidth
         name={'genres'}
+        value={movie.genres}
       />
       <TextField
         label="Длительность фильма (мин)"
@@ -73,6 +96,7 @@ export const CreateForm = () => {
         sx={{ mb: 3 }}
         fullWidth
         name={'runtime'}
+        value={movie.runtime}
       />
       <TextField
         label="Год выхода"
@@ -83,6 +107,7 @@ export const CreateForm = () => {
         sx={{ mb: 3 }}
         fullWidth
         name={'year'}
+        value={movie.year}
       />
       <TextField
         label="Описание фильма"
@@ -93,6 +118,7 @@ export const CreateForm = () => {
         sx={{ mb: 3 }}
         fullWidth
         name={'plot'}
+        value={movie.plot}
       />
       <TextField
         label="Ссылка на постер фильма"
@@ -103,6 +129,7 @@ export const CreateForm = () => {
         sx={{ mb: 3 }}
         fullWidth
         name={'posterUrl'}
+        value={movie.posterUrl}
       />
       <TextField
         label="Рейтинг"
@@ -113,6 +140,7 @@ export const CreateForm = () => {
         sx={{ mb: 3 }}
         fullWidth
         name={'rating'}
+        value={movie.rating}
       />
       <TextField
         label="Список актеров"
@@ -123,6 +151,7 @@ export const CreateForm = () => {
         sx={{ mb: 3 }}
         fullWidth
         name={'actors'}
+        value={movie.actors}
       />
       <TextField
         label="Режиссер"
@@ -133,10 +162,11 @@ export const CreateForm = () => {
         sx={{ mb: 3 }}
         fullWidth
         name={'director'}
+        value={movie.director}
       />
       <Divider sx={{ mb: 5 }}></Divider>
       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-        <Link to={`/`}>
+        <Link to={`/movie/${movieId}`}>
           <Button variant="outlined">Отменить</Button>
         </Link>
         <Button color="button" variant="contained" type="submit">

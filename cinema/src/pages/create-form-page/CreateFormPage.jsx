@@ -1,11 +1,11 @@
 import { Grid } from '@mui/material';
-import { EditForm } from '../../components/Edit-form.jsx';
+import { CreateForm } from '../../components/CreateForm.jsx';
 
-export function EditFormPage() {
+export function CreateFormPage() {
   return (
     <Grid container spacing={2} columns={16}>
       <Grid item={true} xs={9}>
-        <EditForm />
+        <CreateForm />
       </Grid>
     </Grid>
   );
