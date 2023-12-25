@@ -1,10 +1,10 @@
 let cardId; // Глобальная переменная
-const generateBearCard = (id, name, description, linkToImage, code, provider) => {
+const generateBeerCard = (id, name, description, linkToImage, code, provider) => {
     return `
         <div class="list-block__card" id='${id}'>
         <button type='button' class="list-block__editBtn">Редактировать</button>
             <h2>${name.toUpperCase()}</h2>
-            <img class="list-block__card-img" src=${linkToImage} alt="bearcard">
+            <img class="list-block__card-img" src=${linkToImage} alt="beercard">
             <p> ${description.toUpperCase()}</p>
             <p>Код товара: ${code}</p>
             <p>Поставщика: ${provider}</p>
@@ -20,7 +20,8 @@ function fetchAll() { // получаем все данные
 
 async function fetchProfile() { // получаем и выводим имя автора
     try {
-        let user = await fetch('http://localhost:3000/profile').then((response) => response.json());
+        const response = await fetch('http://localhost:3000/profile')
+        const user = await response.json();
         document.getElementById('header__text').textContent = user.name + " " + user.group;
     } catch (err) {
         alert("Ошибка в запросе имени автора: " + err);
@@ -30,12 +31,13 @@ async function fetchProfile() { // получаем и выводим имя а�
 
 async function fetchCards() { // функция получения и отрисовки карточек с сервера
     try {
-        let cards = await fetch('http://localhost:3000/posts').then((response) => response.json());
-        let skeletons = document.getElementsByClassName('skeleton');
-        for (let skeleton of skeletons) {
+        const response = await fetch('http://localhost:3000/posts')
+        const cards = await response.json();
+        const skeletons = document.getElementsByClassName('skeleton');
+        for (const skeleton of skeletons) {
             skeleton.classList.add('invisible');
         }
-        let cardsForRender = await cards ? await cards : []
+        const cardsForRender = await cards ? await cards : []
         renderCards(cardsForRender);
 
     } catch (err) {
@@ -43,14 +45,14 @@ async function fetchCards() { // функция получения и отрис
     }
 }
 
-function renderCards(BearsList) {
+function renderCards(beersList) {
     // добавляем кнопки
-    let bearList = document.getElementById('bearList')
-    let bearListHTML = BearsList.map(Bear => {
-        return generateBearCard(Bear.id, Bear.name, Bear.description, Bear.linkToImage, Bear.code, Bear.provider);
+    const beerList = document.getElementById('beerList')
+    const beerListHTML = beersList.map(beer => {
+        return generateBeerCard(beer.id, beer.name, beer.description, beer.linkToImage, beer.code, beer.provider);
     }).join('');
-    bearList.innerHTML = bearListHTML;
-    bearList.insertAdjacentElement('beforebegin', bearList);
+    beerList.innerHTML = beerListHTML;
+    beerList.insertAdjacentElement('beforebegin', beerList);
 
     // добавляем на каждую кнопку удаление
     const buttons = document.querySelectorAll(".list-block__btn");
@@ -66,20 +68,20 @@ function renderCards(BearsList) {
 
 async function setupDefaultCard() {
     // добавляем кнопки
-    let cards = document.getElementsByClassName('list-block__card');
-    for (let card of cards) {
+    const cards = document.getElementsByClassName('list-block__card');
+    for (const card of cards) {
         card.classList.add('invisible');
     }
-    let skeletons = document.getElementsByClassName('skeleton');
-    for (let skeleton of skeletons) {
+    const skeletons = document.getElementsByClassName('skeleton');
+    for (const skeleton of skeletons) {
         skeleton.classList.remove('invisible');
     }
-    let bearList = document.getElementById('bearList')
-    let bearListHTML = BearsList.map(Bear => {
-        return generateBearCard(Bear.id, Bear.name, Bear.description, Bear.linkToImage, Bear.code, Bear.provider);
+    const beerList = document.getElementById('beerList')
+    const beerListHTML = beersList.map(beer => {
+        return generateBeerCard(beer.id, beer.name, beer.description, beer.linkToImage, beer.code, beer.provider);
     }).join('');
-    bearList.innerHTML = bearListHTML;
-    bearList.insertAdjacentElement('beforebegin', bearList);
+    beerList.innerHTML = beerListHTML;
+    beerList.insertAdjacentElement('beforebegin', beerList);
 
     // добавляем на каждую кнопку удаление
     const buttons = document.querySelectorAll(".list-block__btn");
@@ -92,21 +94,24 @@ async function setupDefaultCard() {
     })
     try {
         // очистка
-        let oldCards = await fetch('http://localhost:3000/posts').then((response) => response.json());
+        const response =  await fetch('http://localhost:3000/posts')
+        let oldCards = await response.json();
+
         for (let oldCard of oldCards) {
             await fetch(`http://localhost:3000/posts/${oldCard.id}`, {
                 method: 'DELETE',
             });
         }
         //добавление
-        for (let j = 0; j < BearsList.length;) {
+        for (let j = 0; j < beersList.length;) {
             await fetch('http://localhost:3000/posts', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json;charset=utf-8'
                 },
-                body: JSON.stringify(BearsList[j])
-            }).then(++j);
+                body: JSON.stringify(beersList[j])
+            })
+            ++j;
         }
 
     } catch {
@@ -116,7 +121,7 @@ async function setupDefaultCard() {
 
 }
 
-const BearsList = [
+const beersList = [
     {
         id: generateId(),
         name: 'Спиноломный Стаут',
@@ -162,18 +167,19 @@ const BearsList = [
 
 async function editClick(e) {
     const currentButton = e.currentTarget;
-    let cardElement = currentButton.closest('.list-block__card');
+    const cardElement = currentButton.closest('.list-block__card');
     cardId = cardElement.id;
-    console.log("МЕНЯЕМ КАРТОЧКУ С ID1", cardId);
-    let cards = await fetch('http://localhost:3000/posts').then((response) => response.json());
-    let cartIndex = cards.findIndex((card) => cardId == card.id);
-    console.log("МЕНЯЕМ КАРТОЧКУ С ID2", cartIndex);
-    let editingCard = cards.at(cartIndex);
-    document.getElementsByName('name')[0].value = editingCard.name;
-    document.getElementsByName('linkToImage')[0].value = editingCard.linkToImage;
-    document.getElementsByName('description')[0].value = editingCard.description;
-    document.getElementsByName('code')[0].value = editingCard.code;
-    document.getElementsByName('provider')[0].value = editingCard.provider;
+    const response = await fetch('http://localhost:3000/posts');
+    const cards = await response.json();
+    const cartIndex = cards.findIndex((card) => cardId == card.id);
+    const editingCard = cards.at(cartIndex);
+
+    document.querySelector('[name="name"]').value = editingCard.name;
+    document.querySelector('[name="description"]').value = editingCard.description;
+    document.querySelector('[name="linkToImage"]').value = editingCard.linkToImage;
+    document.querySelector('[name="code"]').value = editingCard.code;
+    document.querySelector('[name="provider"]').value = editingCard.provider;
+
     document.getElementById('submit-button').classList.add('invisible');
     document.getElementById('edit-button').classList.remove('invisible');
 
@@ -181,13 +187,13 @@ async function editClick(e) {
 
 async function handleClick(e) {
     const currentButton = e.currentTarget;
-    let cardElement = currentButton.closest('.list-block__card');
-    let cardId = cardElement.id;
+    const cardElement = currentButton.closest('.list-block__card');
+    const cardId = cardElement.id;
     cardElement.remove();
     try {
         await fetch(`http://localhost:3000/posts/${cardId}`, {
             method: 'DELETE'
-        }).then()
+        })
     } catch (err) {
         alert(err);
     }
@@ -196,8 +202,8 @@ async function handleClick(e) {
 
 const applicantForm = document.getElementById('card-form')
 
-function serializeForm(Form) { // собираем данные из формы
-    const formData = new FormData(Form); // создаём объект FormData, передаём в него элемент формы
+function serializeForm(form) { // собираем данные из формы
+    const formData = new FormData(form); // создаём объект FormData, передаём в него элемент формы
     const name = formData.get('name');
     const description = formData.get('description');
     const linkToImage = formData.get('linkToImage');
@@ -208,34 +214,29 @@ function serializeForm(Form) { // собираем данные из формы
 }
 
 function validateForm() {
-    console.log('validate start');
-    let addedCardForm = serializeForm(applicantForm);
+    const addedCardForm = serializeForm(applicantForm);
     if (Object.values(addedCardForm).filter((param) => param === "").length === 0) {
-        console.log('validate success');
-        pushCard().then();
+
+        pushCard();
     }
 }
 
 async function pushCard() { // функция добавления карточки
-    let addedCard = serializeForm(applicantForm);
-    console.log('card add test', addedCard)
-    // document.getElementById('loader').classList.remove('invisible');
-    // setupButton.setAttribute('disabled', '');
-    // submitButton.setAttribute('disabled', '');
+    const addedCard = serializeForm(applicantForm);
     await fetch('http://localhost:3000/posts', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json;charset=utf-8'
         },
         body: JSON.stringify(addedCard)
-    }).then(async () => {
-        let cards = await fetch('http://localhost:3000/posts').then((response) => response.json());
-        cards.push(addedCard);
-        document.getElementById('loader').classList.add('invisible');
-        setupButton.removeAttribute('disabled', '');
-        submitButton.removeAttribute('disabled', '');
-        renderCards(cards);
     });
+    let response = await fetch('http://localhost:3000/posts')
+    let cards = await response.json();
+    cards.push(addedCard);
+    document.getElementById('loader').classList.add('invisible');
+    setupButton.removeAttribute('disabled', '');
+    submitButton.removeAttribute('disabled', '');
+    renderCards(cards);
 }
 
 function generateId() {
@@ -243,20 +244,14 @@ function generateId() {
 }
 
 async function editCard(e) { //редактируем данные
-    let editCard = serializeForm(applicantForm);
+    const editCard = serializeForm(applicantForm);
     try {
-        console.log('edit index', cardId)
         await fetch(`http://localhost:3000/posts/${cardId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(editCard)
-        }).then(() => {
-            console.log("Запушили");
-            // document.getElementById('submit-button').classList.remove('invisible');
-            // document.getElementById('edit-button').classList.add('invisible');
-            // location.reload();
         })
     } catch (err) {
         alert(err);
