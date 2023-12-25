@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <title>DOM (Document Object Model)</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+
+<body>
+<header>
+    <p class="header__p">Пирогов Артём 6409</p>
+    <button id="setup-button" class="header__btn">Засетапить начальные значения</button>
+</header>
+
+
+<main>
+    <div class="container">
+        <div class="container__left">
+            <div class="form-block">
+                <p
+                        class="form-block__title">Форма добавления карточки товара
+                </p>
+
+                <form id="card-form" class="form-block__form">
+                    <input class="form-block__input" name="name" type="text" placeholder="Название" required="">
+                    <input class="form-block__input" name="description" type="text" placeholder="Описание товара"
+                           required="">
+                    <input class="form-block__input" name="linkToImage" type="url"
+                           placeholder="Ссылка на изображение товара" required="">
+                    <input class="form-block__input" name="code" type="number" placeholder="Код товара" required="">
+                    <input class="form-block__input" name="provider" type="text" placeholder="Поставщик" required="">
+                    <button class="form-block__submit" type="submit" id="submit-button">Добавить карточку товара</button>
+                    <button class="form-block__submit invisible" id="edit-button">Редактировать</button>
+                </form>
+
+            </div>
+        </div>
+
+        <div class="container__right">
+            <div class="list-block">
+                <p class="list-block__title">Витрина карточек</p>
+
+                <div id="bearList" class="list-block__list">
+                    <!--заполняется карточками-->
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</main>
+
+<script defer type="module" src='dom.js'></script>
+</body>
+</html>
