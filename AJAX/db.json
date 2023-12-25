@@ -1,0 +1,48 @@
+{
+  "posts": [
+    {
+      "id": "be5cf5fc918f",
+      "name": "Спиноломный Стаут",
+      "description": "Бодрящий пенистый напиток, который наполнит каждого истинного дворфа свежестью и энергией!",
+      "linkToImage": "https://steamuserimages-a.akamaihd.net/ugc/1865070080961279425/A1FC053FE3EC20DAAEC8993410F203DC7B747AA7/",
+      "code": 1,
+      "provider": "Какой-то хмурый гном"
+    },
+    {
+      "id": "7df7d3c6add52",
+      "name": "Темный моркит",
+      "description": "Оригинальный напиток, одобренный DRG. Опьяняющий и горький, хоть он и вряд ли сможет вывести вас из строя.",
+      "linkToImage": "https://steamuserimages-a.akamaihd.net/ugc/1865070080961114338/0B169681095D1F2CC8493BA7BE00B4E1DDC5A0DB/",
+      "code": 2,
+      "provider": "Какой-то хмурый гном"
+    },
+    {
+      "id": "928baca241d6a",
+      "name": "Золотые горшочки",
+      "description": "Почти золотой дождь",
+      "linkToImage": "https://steamuserimages-a.akamaihd.net/ugc/1875202855990764160/581C570F30E8335EF94DE35BF68F65695E995294/",
+      "code": 123,
+      "provider": "Какой-то хмурый гном"
+    },
+    {
+      "id": "716bc33c2f978",
+      "name": "Скалистая гора",
+      "description": "Черта стиля. Напиток мыслителя. Осушение кружки этого крепкого варева дает чедесное чувство единства с окружающим камнем, позволяя вам резать его словно масло.",
+      "linkToImage": "https://steamuserimages-a.akamaihd.net/ugc/1865070080961217466/5FCB876B9124E35129CA5DD80C2B9404D62D4D88/",
+      "code": 4,
+      "provider": "Какой-то хмурый гном"
+    },
+    {
+      "id": "e62d5a0b9a88f",
+      "name": "Взрыватель Красных Скал",
+      "description": "Когда вы абсолютно, однозначно собираетесь убить все на своем пути, не соглашайтесь ни на что другое.",
+      "linkToImage": "https://steamuserimages-a.akamaihd.net/ugc/1865070080961239138/DAD5F6FC052713E0E05F917789CE0A9592D9B007/",
+      "code": 5,
+      "provider": "Какой-то хмурый гном"
+    }
+  ],
+  "profile": {
+    "name": "Пирогов Артём",
+    "group": "6409"
+  }
+}
