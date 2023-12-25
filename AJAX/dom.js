@@ -103,7 +103,7 @@ async function setupDefaultCard() {
             });
         }
         //добавление
-        for (let j = 0; j < beersList.length;) {
+        for (let j = 0; j < beersList.length; j++) {
             await fetch('http://localhost:3000/posts', {
                 method: 'POST',
                 headers: {
@@ -111,7 +111,7 @@ async function setupDefaultCard() {
                 },
                 body: JSON.stringify(beersList[j])
             })
-            ++j;
+
         }
 
     } catch {
